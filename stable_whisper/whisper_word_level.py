@@ -622,6 +622,13 @@ def transcribe_stable(
                     for i, segment in enumerate(current_segments, start=len(all_segments))
                 ]
             )
+
+            # Save audio transcription for each segment
+            for segment in current_segments:
+                segment_text = str(segment_silence_timing[0]) + "-" + segment_silence_timing[1] + "||| " segment["text"]
+                segment_id = segment["id"]
+                with open(f"/notebooks/segment_{segment_id}.txt", "w") as f:
+                    f.write(segment_text)
             all_tokens.extend(
                 [token for segment in current_segments for token in segment["tokens"]]
             )
